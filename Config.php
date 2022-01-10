@@ -13,6 +13,8 @@ class Config
         "config" => "/etc/ssl/openssl.cnf"
     ];
 
+    public static $privateKeypass = 123456;
+
     public static $pfxpath = 'test_cer.pfx';
 
     public static $cerpath = 'test_cer.cer';

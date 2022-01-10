@@ -4,11 +4,10 @@ class Sign
 {
     /**
      * 私钥加秘
-     * @param string $privkeypass
      * @return string
      * @throws Exception
      */
-    public function encrypted(string $privkeypass)
+    public function encrypted()
     {
         $pfxPath = __DIR__.'/'.Config::$pfxpath;
 
@@ -19,7 +18,7 @@ class Sign
 
         $data = 'php是世界上最好的语言';
 
-        openssl_pkcs12_read($privKey, $certs, $privkeypass);
+        openssl_pkcs12_read($privKey, $certs, Config::$privateKeypass);
 
         $privKeyId = $certs['pkey'];
 
@@ -31,10 +30,9 @@ class Sign
     /**
      * 公钥解密
      * @param string $sign
-     * @param string $privkeypass
      * @throws Exception
      */
-    public function decrypted(string $sign, string $privkeypass)
+    public function decrypted(string $sign)
     {
         $data = 'php是世界上最好的语言';
 
@@ -46,7 +44,7 @@ class Sign
 //        }
 
 //        $privkey = file_get_contents($pfxPath);
-//        openssl_pkcs12_read($privkey,$certs, $privkeypass);
+//        openssl_pkcs12_read($privkey,$certs, Config::$privateKeypass);
 //        $publickId = $certs['cert'];
 //        $flag = (bool)openssl_verify($text, $sign, $pubKeyId);
 
@@ -59,6 +57,6 @@ class Sign
 
         $flag = (bool)openssl_verify($data, $unsign, $pubKeyId,OPENSSL_ALGO_SHA1);
 
-        echo $flag ?  '验证成功' : '验证失败';
+        echo $flag ?  '证书验证成功'.PHP_EOL : '证书验证失败'.PHP_EOL;
     }
 }

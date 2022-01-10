@@ -2,8 +2,6 @@
 
 class Certificate
 {
-    private $privateKeypass = "123456";
-
     private $expireDays = 365;
 
     protected $dn = array(
@@ -27,7 +25,7 @@ class Certificate
 
         $sscert = openssl_csr_sign($csr, null, $privateKey, $this->expireDays, Config::$config);
         openssl_x509_export($sscert, $csrkey);
-        openssl_pkcs12_export($sscert, $prikey, $privateKey, $this->privateKeypass);
+        openssl_pkcs12_export($sscert, $prikey, $privateKey, Config::$privateKeypass);
 
         $cerpath = __DIR__.'/'.Config::$cerpath;
         $pfxpath = __DIR__.'/'.Config::$pfxpath;
